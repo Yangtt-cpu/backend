@@ -13,5 +13,6 @@ import lombok.Data;
 @Data
 public class Alert {
     private String yujingzhi;
+    private String value;
 }
 

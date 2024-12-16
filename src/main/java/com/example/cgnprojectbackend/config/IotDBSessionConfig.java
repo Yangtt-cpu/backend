@@ -20,17 +20,10 @@ import java.util.List;
 @Component
 public class IotDBSessionConfig {
 
-//    @Value("${Spring.iotdb.ip}")
-//    private static final String LOCAL_HOST = "10.78.34.61";
-//    private static final String LOCAL_HOST = "127.0.0.1";
 
-
-//    private static final String LOCAL_HOST = "192.168.1.104";
-    private static final String LOCAL_HOST = "10.18.18.200";
-
-//    private static final String LOCAL_HOST = "10.78.34.61";
-//    @Value("${Spring.iotdb.port}")
-//    private int port;
+//    private static final String LOCAL_HOST = "192.16.0.8";
+      private static final String LOCAL_HOST = "192.16.0.100";
+//
     private static Session session;
 
     @Bean

@@ -32,6 +32,7 @@ public interface IotDbServer{
 
     public List<PredictData> queryPredictDataByTimeLine(List<String> measurements) throws IoTDBConnectionException, StatementExecutionException;
     public List<PredictData> queryPredictDataByTimeLine2(List<String> measurements) throws IoTDBConnectionException, StatementExecutionException;
+    public List<PredictData> queryPredictDataFFT(List<String> measurements) throws IoTDBConnectionException, StatementExecutionException;
 
     public List<SymptomData> querySymptomDataByLine(List<String> measurements) throws IoTDBConnectionException, StatementExecutionException;
     public List<SymptomData> querySymptomDataByLine2(List<String> measurements) throws IoTDBConnectionException, StatementExecutionException;

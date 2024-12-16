@@ -21,11 +21,19 @@ import java.util.List;
 
 public class IotDBController {
 
-    private final static List<String> ALL_MEASUREMENTS = new ArrayList<>();
+    private final static List<String> ALL_BLPAMP = new ArrayList<>();
 
     static {
         for (int i = 0; i <= 255; i++) {
-            ALL_MEASUREMENTS.add("blpamp" + i);
+            ALL_BLPAMP.add("blpamp" + i);
+        }
+    }
+
+    private final static List<String> ALL_FFTAMP = new ArrayList<>();
+
+    static {
+        for (int i = 0; i <= 1023; i++){
+            ALL_FFTAMP.add("fftamp" + i);
         }
     }
 
@@ -35,9 +43,12 @@ public class IotDBController {
 
     @PostMapping("/queryblpamp")
     public RestBean<List<PredictData>> queryPredictDataByTimeLine2() throws IoTDBConnectionException, StatementExecutionException {
-        return RestBean.success(iotDbServer.queryPredictDataByTimeLine2(ALL_MEASUREMENTS));
+        return RestBean.success(iotDbServer.queryPredictDataByTimeLine2(ALL_BLPAMP));
     }
-
+    @PostMapping("/queryfftamp")
+    public RestBean<List<PredictData>> queryPredictDataFFT() throws IoTDBConnectionException, StatementExecutionException {
+        return RestBean.success(iotDbServer.queryPredictDataFFT(ALL_FFTAMP));
+    }
     @PostMapping("/queryAlert")
     public RestBean<List<Alert>> queryAlert(@RequestParam("yujingzhis") List<String> yujingzhis) throws IoTDBConnectionException,StatementExecutionException {
         return RestBean.success(iotDbServer. queryAlert(yujingzhis));

@@ -31,7 +31,7 @@ public class IotDbServerImpl implements IotDbServer {
     private String predict_device;
 
 //    @Value("${spring.iotdb.predict_device2:root.ciia.fcg.unit2.preresult}")
-    @Value("${spring.iotdb.predict_device2:root.vibdata.card28.channel1}")
+    @Value("${spring.iotdb.predict_device2:root.vibdata.card28.channel2}")
     private String predict_device2;
 
     public List<Alert> queryAlert(List<String>yujingzhis)
@@ -40,7 +40,7 @@ public class IotDbServerImpl implements IotDbServer {
          if (yujingzhis !=null){
              for (String yujingzhi:yujingzhis)
              {
-                 String sql = "select last " + yujingzhi + " form " + predict_device2;
+                 String sql = "select last " + yujingzhi + " from " + predict_device2;
                  SessionDataSet sessionDataSet = iotDBSessionConfig.query(sql);
                  int fetSize = sessionDataSet.getFetchSize();
                  if (fetSize>0){
@@ -49,6 +49,7 @@ public class IotDbServerImpl implements IotDbServer {
                          RowRecord next = sessionDataSet.next();
                          List<Field> fields = next .getFields();
                          alert.setYujingzhi(yujingzhi);
+                         alert.setValue(fields.get(1).toString());
                          result.add(alert);
                      }
                  }
@@ -151,6 +152,35 @@ public class IotDbServerImpl implements IotDbServer {
 
     @Override
     public  List<PredictData> queryPredictDataByTimeLine2(List<String> measurements) throws IoTDBConnectionException, StatementExecutionException {
+        List<PredictData> result = new ArrayList<>();
+        if(measurements != null){
+            for (String measurement:measurements
+            ) {
+                //查询当前时间的前1个小时的数据
+                String queryTime = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis()-1000*60*60);
+                String sql = "select " + measurement +" from "+ predict_device2+ " order by time desc limit 1 ";
+                SessionDataSet sessionDataSet = iotDBSessionConfig
+                        .query(sql);
+                int fetchSize = sessionDataSet.getFetchSize();
+                if(fetchSize>0){
+                    while (sessionDataSet.hasNext()){
+                        PredictData predictData = new PredictData();
+                        RowRecord next = sessionDataSet.next();
+                        List<Field> fields = next.getFields();
+                        predictData.setMeasurement(measurement);
+                        predictData.setTime(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(next.getTimestamp()));
+                        predictData.setValue(fields.get(0).toString());
+                        result.add(predictData);
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public  List<PredictData> queryPredictDataFFT(List<String> measurements) throws IoTDBConnectionException, StatementExecutionException {
         List<PredictData> result = new ArrayList<>();
         if(measurements != null){
             for (String measurement:measurements
