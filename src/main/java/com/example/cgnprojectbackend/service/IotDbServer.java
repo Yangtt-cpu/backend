@@ -12,6 +12,9 @@ import java.util.List;
 
 public interface IotDbServer{
 
+    public List<PredictData> queryJKDData(List<String> measurements) throws IoTDBConnectionException, StatementExecutionException;
+    public List<PredictData> queryJKDData2(List<String> measurements) throws IoTDBConnectionException, StatementExecutionException;
+
     public List<Alert> queryAlert(List<String> yujingzhis) throws IoTDBConnectionException, StatementExecutionException;
 
     public List<PredictData> queryPredictData(List<String> measurements) throws IoTDBConnectionException, StatementExecutionException;
@@ -33,6 +36,7 @@ public interface IotDbServer{
     public List<PredictData> queryPredictDataByTimeLine(List<String> measurements) throws IoTDBConnectionException, StatementExecutionException;
     public List<PredictData> queryPredictDataByTimeLine2(List<String> measurements) throws IoTDBConnectionException, StatementExecutionException;
     public List<PredictData> queryPredictDataFFT(List<String> measurements) throws IoTDBConnectionException, StatementExecutionException;
+    public List<PredictData> queryPredictDataBLP(List<String> measurements) throws IoTDBConnectionException, StatementExecutionException;
 
     public List<SymptomData> querySymptomDataByLine(List<String> measurements) throws IoTDBConnectionException, StatementExecutionException;
     public List<SymptomData> querySymptomDataByLine2(List<String> measurements) throws IoTDBConnectionException, StatementExecutionException;
